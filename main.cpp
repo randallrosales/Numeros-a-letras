@@ -1,55 +1,106 @@
-#include <string>
-#include <iostream>
-
+#include<iostream>
+#include<stdlib.h>
+#include<stdio.h>
+#include<string.h>
+#include <windows.h> 
+#include <time.h>
+#define N 11 //define la longitud maxima que es posible para el numero
 using namespace std;
+//PROTOTIPOS
+void unidades(char num[N],int x);
+void unidades2(char num[N],int x);
+bool decenas(char num[N],int x);
+void centenas(char num[N],int x);
 
-int main()
-{
-    string unidades[] = {"cero", "uno", "dos" ,"tres" ,"cuatro" ,"cinco" ,"seis" ,"siete" ,"ocho" ,"nueve","diez"};
-    string especiales[] = {"once", "doce","trece","catorce", "quince","diezciseis", "diecisiete", "dieciocho", "diecinueve"};
-    string decenas[] = {"veinte", "treinta","cuarenta","cincuenta", "sesenta","setenta", "ochenta", "noventa"};
-    string centenas[] = {"ciento", "doscientos","trescientos","cuatrocientos", "quinientos","seiscientos", 
-	"setecientos", "ochocientos", "novecientos"};
-	
-    int num, unid, dec, cent;
-    
-    cout << "\nIngrese un numero entre 0 al 999: \n";
-    cin >> num;
+void gotoxy(int x, int y);
+int main(){
+	char num[N];
+	bool b,a;
+	int x,y=-1,i;
+	system("color 1f");
+	do{
+		system("title Conversor de Numeros a letras");
+		system("cls");
+		fflush(stdin);
+		do{a=true;
+		b=true;
+		cout<<"\nIngrese el numero: ";cin.getline(num,N);
+		x=strlen(num);}while(x<1||x>10);	fflush(stdin);cout<<"\n\n";
+		while(x>=1){
+			y++;
+			fflush(stdin);
+			switch(x){
+			case 1:if(a==true&&b==true)unidades(num,y);a++;if(num[0]=='0'){x=1;}break;
+			case 2:b=decenas(num,y);if(num[y+1]=='0'){x=1;}break;
+			case 3:centenas(num,y);break;
 
-if (num<0 || num>999)
-{
-	cout << "\nERROR: El numero no esta dentro del rango indicado\n";
+			case 10: cout<<"Lo siento pero puedo convertir hasta 999";x=1;break;
+			}//cout<<"["<<x<<"]";
+			--x;
+			fflush(stdin);
+		}y=-1;
+		fflush(stdin);
+		cout<<"\n\n\nSalir 0: ";cin>>i;}while(i!=0);
 }
 
-else 
-{
+void unidades(char num[N],int x){
+	switch(num[x]){//UNIDADES
+	case '0':cout<<"cero"<<" ";break;
+	case '1':cout<<"uno"<<" ";break;
+	case '2':cout<<"dos"<<" ";break;
+	case '3':cout<<"tres"<<" ";break;
+	case '4':cout<<"cuatro"<<" ";break;
+	case '5':cout<<"cinco"<<" ";break;
+	case '6':cout<<"seis"<<" ";break;
+	case '7':cout<<"siete"<<" ";break;
+	case '8':cout<<"ocho"<<" ";break;
+	case '9':cout<<"nueve"<<" ";break;
+	}
+}
+void unidades2(char num[N],int x){
+	switch(num[x]){//UNIDADES
+	case '1':cout<<"once"<<" ";break;
+	case '2':cout<<"doce"<<" ";break;
+	case '3':cout<<"trece"<<" ";break;
+	case '4':cout<<"catorce"<<" ";break;
+	case '5':cout<<"quince"<<" ";break;
+	case '6':cout<<"dieciseis"<<" ";break;
+	case '7':cout<<"diecisiete"<<" ";break;
+	case '8':cout<<"dieciocho"<<" ";break;
+	case '9':cout<<"diecinueve"<<" ";break;
+	}
+}
+bool decenas(char num[N],int x){
+	bool r=true;
+	switch(num[x]){//DECENAS
+	case '1':if(num[x+1]!='0'){unidades2(num,x+1);r=false;}else{cout<<"diez"<<" ";}break;
+	case '2':cout<<"veinte";if(num[x+1]!='0'){cout<<" y"<<" ";}break;
+	case '3':cout<<"treinta";if(num[x+1]!='0'){cout<<" y"<<" ";}break;
+	case '4':cout<<"cuarenta";if(num[x+1]!='0'){cout<<" y"<<" ";}break;
+	case '5':cout<<"cincuenta";if(num[x+1]!='0'){cout<<" y"<<" ";}break;
+	case '6':cout<<"sesenta";if(num[x+1]!='0'){cout<<" y"<<" ";}break;
+	case '7':cout<<"setenta";if(num[x+1]!='0'){cout<<" y"<<" ";}break;
+	case '8':cout<<"ochenta";if(num[x+1]!='0'){cout<<" y"<<" ";}break;
+	case '9':cout<<"noventa";if(num[x+1]!='0'){cout<<" y"<<" ";}break;
+	}
+	return r;
+}
+void centenas(char num[N],int x){
+	switch(num[x]){
+	case '1':(num[x+2]!='0')?cout<<"ciento"<<" ":cout<<"cien"<<" ";break;
+	case '2':cout<<"doscientos"<<" ";break;
+	case '3':cout<<"trescientos"<<" ";break;
+	case '4':cout<<"cuatrocientos"<<" ";break;
+	case '5':cout<<"quinientos"<<" ";break;
+	case '6':cout<<"seiscientos"<<" ";break;
+	case '7':cout<<"setecientos"<<" ";break;
+	case '8':cout<<"ochocientos"<<" ";break;
+	case '9':cout<<"novecientos"<<" ";break;
 
-    if(num>=0 && num<11)
-        cout << endl << unidades[num];
-    else if(num<20)
-        cout << endl << especiales[num-11];
-    else if(num<100){
-        unid = num % 10;
-        dec = num/10;
-        if(unid == 0)
-            cout << endl << decenas[dec-2] ;
-        else
-            cout << endl << decenas[dec-2] <<" y " <<unidades[unid];
-    }
-    else
-       {
-       	if(num>99 && num<999)
-		   {
-        unid = num % 10;
-        dec = num/10;
-        cent = num % 100;
-        
-        cout << endl << centenas [cent] << decenas[dec] <<" y " <<unidades[unid];
-    }
-        
-                   
-	   }
+	}
 }
 
-    return 0;
-}
+void gotoxy(int x, int y){
+	COORD coord={x,y};
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+} 
