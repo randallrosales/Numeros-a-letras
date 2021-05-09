@@ -24,18 +24,31 @@ int main(){
 		fflush(stdin);
 		do{a=true;
 		b=true;
-		cout<<"\nIngrese el numero: ";cin.getline(num,N);
-		x=strlen(num);}while(x<1||x>10);	fflush(stdin);cout<<"\n\n";
-		while(x>=1){
+		cout<<"\nIngrese un numero entre cero y 999: ";
+		cin.getline(num,N);
+		x=strlen(num);
+		
+		}
+		while(x<1||x>10);	
+		fflush(stdin);
+		cout<<"\n\n";
+		while(x>=1)
+		{
 			y++;
 			fflush(stdin);
 			switch(x){
-			case 1:if(a==true&&b==true)unidades(num,y);a++;if(num[0]=='0'){x=1;}break;
-			case 2:b=decenas(num,y);if(num[y+1]=='0'){x=1;}break;
-			case 3:centenas(num,y);break;
-
-			case 10: cout<<"Lo siento pero puedo convertir hasta 999";x=1;break;
-			}//cout<<"["<<x<<"]";
+			case 1:if(a==true&&b==true)unidades(num,y);a++;if(num[0]=='0'){x=1;}
+			break;
+			case 2:b=decenas(num,y);
+			if(num[y+1]=='0'){x=1;}
+			break;
+			case 3:centenas(num,y);
+			break;
+			case 4: cout<<"\nLo siento pero puedo convertir hasta 999\n";x=1;
+			break;
+			}
+			
+			cout<<"["<<x<<"]";
 			--x;
 			fflush(stdin);
 		}y=-1;
@@ -97,10 +110,6 @@ void centenas(char num[N],int x){
 	case '8':cout<<"ochocientos"<<" ";break;
 	case '9':cout<<"novecientos"<<" ";break;
 
+		}
+		
 	}
-}
-
-void gotoxy(int x, int y){
-	COORD coord={x,y};
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-} 
